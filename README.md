@@ -15,3 +15,10 @@ After downloading the recommended file, perform an update on the volusia.parcel 
 To determine the distance for each parcel in a county, a Python script was created in order to loop through the county entirely, excluding the "null" geometries. The SQL command, before running the python code, to be used:
 
 alter table volusia.parcel add nearest_evac_route double precision;
+
+Within the Python code, there are two important SQL commands being ran:
+These commands run through each row within the parcel table and calcualtes the distance and then is added to the parcel table under "nearest_evac_route" from the second command.
+- sql2 = "select p.parid::integer, p.geom, ST_Distance(p.geom, (select p2.geom from volusia.parcel p2 where p2.parid=" + parid + "))/5280 from volusia.parcel p where p.luc='0000' or p.luc='0100' or p.luc='0200' or p.luc='0400' or p.luc='0800' order by p.geom <-> (select p2.geom from volusia.parcel p2 where p2.parid=" + parid + ") limit 1;"
+    cur2.execute(sql2)
+- sql3 = "update volusia.parcel p1 set nearest_evac_route = " + str(distance) + " where p1.parid=" + parid + ";"
+
