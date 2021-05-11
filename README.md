@@ -25,7 +25,7 @@ These commands run through each row within the parcel table and calcualtes the d
 - sql3 = "update volusia.parcel p1 set nearest_evac_route = " + str(distance) + " where p1.parid=" + parid + ";"
 
 To view data and to clean up:
--create index idx_parcel_luc on volusia.parcel(luc);
+- create index idx_parcel_luc on volusia.parcel(luc);
 - create index idx_parcel on volusia.parcel(paris);
 - create index parcel_geom_idx on volusia.parcel using GIST(geom);
 - vacuum analyze volusia.parcel;
